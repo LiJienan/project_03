@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //方法1 split
+
+        // function getCookies(key) {
+        //     if (cookies) {
+        //         let arr = cookies.split(';');
+        //         for (let i = 0; i < arr.length; i++) {
+        //             //console.log(arr[i].trim());
+        //             let newArr = arr[i].trim().split('=');
+        //             // console.log(newArr);
+        //             if (key === newArr[0]) {
+        //                 return decodeURIComponent(newArr[1])
+        //             }
+        //         }
+        //         return '查无此cookie';
+        //     }
+        // }
+
+
+        // let a = getCookies('username');
+        // let b = getCookies('password');
+        // console.log(a, b);
+
+
+        //方法2
+
+        // function getCookies2(key) {
+        //     let cookies = document.cookie + ';';
+        //     console.log(cookies);
+        //     let i = cookies.indexOf(key + '=');
+        //     let start = i + key.length + 1;
+        //     let end = cookies.indexOf(";", start);
+        //     let str = cookies.slice(start, end);
+        //     return decodeURIComponent(str)
+        // }
+        // let a = getCookies2('username');
+        // console.log(a);
+
+        //方法3:
+        console.log(document.cookie);
+        function getCookies3(key) {
+            let prefix = key + '=';
+            let start = document.cookie.indexOf(prefix);
+            if (start === -1) {
+                return null;
+            }
+            let end = document.cookie.indexOf(';', start + prefix.length);
+            if (end === -1) {
+                end = document.cookie.length
+            }
+            let value = document.cookie.slice(start + prefix.length, end);
+            return decodeURIComponent(value);
+        }
+        console.log(getCookies3('username'));
+        console.log(getCookies3('password'));
+    </script>
+</body>
+
+</html>

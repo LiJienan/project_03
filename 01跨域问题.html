@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../myAJAX.js"></script>
+    <style>
+        #ipt {
+            width: 390px;
+            height: 40px;
+            border: 2px solid #54E93c;
+            outline: none;
+
+        }
+
+        #box {
+            width: 390px;
+            border: 2px solid #54E93c;
+            border-top: none;
+            /* display: none; */
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="ipt">
+    <div id="box"></div>
+    <script>
+        let ipt = document.getElementById('ipt');
+        let box = document.getElementById('box');
+        ipt.oninput = function () {
+            let val = ipt.value;
+            if (val.length === 0) {
+                box.style.display = 'none'
+            } else {
+                box.style.display = 'block'
+            }
+            let script = document.createElement('script');
+            script.src = " http://suggestion.baidu.com/su?cb=callback&wd=" + val;
+            document.body.appendChild(script);
+        }
+        function callback(res) {
+            console.log(res);
+            let arr = res.s;
+            console.log(arr);
+            let str = '';
+            for (let i = 0; i < arr.length; i++) {
+                str += `<p>${arr[i]}</p>`
+            }
+            box.innerHTML = str;
+
+        }
+
+    </script>
+</body>
+
+</html>

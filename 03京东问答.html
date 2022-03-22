@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../jquery-3.6.0.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 10px;
+        }
+
+        .box {
+            width: 999px;
+            margin: auto;
+        }
+
+        .items {
+            width: 100%;
+            padding-top: 18px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .items i {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background-color: #f91;
+            border-radius: 50%;
+            color: #fff;
+            font-style: 12px;
+            line-height: 18px;
+            text-align: center;
+            font-style: normal;
+            margin-right: 7px;
+
+        }
+
+        .items-con {
+            margin-top: 15px;
+        }
+
+        .items-con>i {
+            background-color: #9b1;
+        }
+
+        .more {
+            display: block;
+            color: #005ea7;
+            text-decoration: none;
+            padding-bottom: 18px;
+            margin-left: 25px;
+            padding-top: 18px;
+        }
+
+        .answer {
+            display: none;
+        }
+
+        .answer p {
+            color: #888;
+            font-size: 14px;
+            margin: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+
+    </div>
+    <script>
+        $.ajax({
+            type: 'get',
+            url: 'https://question.jd.com/question/getQuestionAnswerList.action?page=2&productId=100012015172',
+            dataType: 'jsonp',
+            success: function (res) {
+                console.log(res);
+                let arr = res.questionList;
+                // console.log(arr);
+                let str = ''
+                for (let i = 0; i < arr.length; i++) {
+                    str += `<div class="items">
+                        <div class="item-tit"><i>问</i>${arr[i].content}</ >
+                         <div class="items-con"><i>答</i>${arr[i].answerList[0].content}</div>
+                         <div class='answer'></div>
+                        <a href="javascript:;" class="more" id="${arr[i].id}">继续查看${arr[i].answerCount - 1}条回答</a>
+                         </div > `
+                }
+                $('.box').html(str)
+            }
+        })
+        $('.box').on('click', '.more', function () {
+            let id = $(this).attr('id');
+            let that = $(this);
+            $.ajax({
+
+                type: 'get',
+                url: "https://question.jd.com/question/getAnswerListById.action?&page=1&questionId=" + id,
+                dataType: 'jsonp',
+                success: function (res) {
+                    // console.log(res)
+                    let arr = res.answers;
+                    let str = '';
+                    for (let i = 0; i < arr.length; i++) {
+                        str += `<p>${arr[i].content}</p>`
+                    }
+                    that.siblings('.answer').toggle().html(str)
+
+                }
+
+            })
+
+        })
+    </script>
+</body>
+
+</html>

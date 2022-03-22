@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let admin = '小米';
+        let pwd = 223345;
+        function setCookies(key, value, num) {
+            let endtime = new Date(new Date().getTime() + 1000 * 60 * num).toUTCString();
+            console.log(endtime);
+
+            value = encodeURIComponent(value);
+            document.cookie = `${key}=${value};expires=${endtime};path:/`
+
+        }
+        setCookies('username', admin, 40);
+        setCookies('password', pwd, 40);
+        console.log(value);
+    </script>
+</body>
+
+</html>
